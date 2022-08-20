@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import * as bases from "../components/bases"
-import * as navbars from "../components/navbars"
-import * as footers from "../components/footers"
 import * as paginators from "../components/paginators"
 
 export const DEBUG = true;
@@ -91,8 +89,19 @@ export function Home() {
     });
   }
   
-  function sendMessage() {
-    console.log("Предыдущий запрос ещё в обработке!")
+  async function sendMessage() {
+    const formData = new FormData();
+    formData.append("text", text);
+    const config = {
+      method: "POST",
+      timeout: 5000,
+      url: `/api/chat/`,
+      data: formData,
+    };
+    const response = await axios(config);
+    console.log(`response: ${response}`)
+    setText('')
+    getAllMessage()
   }
 
   const GetUsersStore = useSelector((state) => state.GetUsersStore);
@@ -119,13 +128,15 @@ export function Home() {
   return (
     <bases.Base1>
       <main className="custom_main p-0 m-0 w-100">
-        <navbars.Navbar1 />
         {load ? <div>Идёт загрузка...</div> : <div></div>}
         {error ? <div>Ошибка 1</div> : <div></div>}
         {fail ? <div>Ошибка 2</div> : <div></div>}
 
         <div className="container m-2 p-2">
-          <form onSubmit={sendMessage}>
+          <form onSubmit={(event)=>{
+            event.preventDefault()
+            sendMessage()
+          }}>
             <label for="floatingInput">Введите сообщение</label>
             <div className="input-group">
               <input type="text" placeholder="введите сообщение сюда"
@@ -146,7 +157,7 @@ export function Home() {
             <paginators.Paginator1 page={page} setPage={setPage} count={data["x-total-count"]} limit={limit}></paginators.Paginator1>
             <ul>
               {data["list"].map((item) => (
-                <li>{item.text}</li>
+                <li className="text-start">{item.text}</li>
               ))}
             </ul>
             <paginators.Paginator1 page={page} setPage={setPage} count={data["count"]} limit={limit}></paginators.Paginator1>
@@ -169,7 +180,6 @@ export function Home() {
           </button>
         </div>
       </main>
-      <footers.Footer1 />
     </bases.Base1>
   );
 }

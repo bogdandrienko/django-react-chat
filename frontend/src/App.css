@@ -37,3 +37,45 @@
     transform: translateY(0px);
   }
 }
+
+.custom_body_1{
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: Zen Kaku Gothic Antique, sans-serif !important;
+}
+
+.custom_main_1{
+  min-height: 70vh;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 !important;
+}
+@media (min-width: 576px) {
+.custom_main_1 {
+  max-width: 540px;
+}
+}
+@media (min-width: 768px) {
+.custom_main_1 {
+  max-width: 720px;
+}
+}
+@media (min-width: 992px) {
+.custom_main_1 {
+  max-width: 960px;
+}
+}
+@media (min-width: 1200px) {
+.custom_main_1 {
+  max-width: 1140px;
+}
+}
+@media (min-width: 1400px) {
+.custom_main_1 {
+  max-width: 1320px;
+}
+}
